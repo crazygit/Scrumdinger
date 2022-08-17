@@ -33,7 +33,7 @@ extension DailyScrum {
             self.name = name
         }
     }
-    
+
     // Data will contain all the editable properties of DailyScrum.
     // The types of the properties match the controls that you’ll create in the edit view.
     struct Data {
@@ -42,9 +42,16 @@ extension DailyScrum {
         var lengthInMinutes: Double = 5
         var theme: Theme = .seafoam
     }
-    
-    var data:Data {
+
+    var data: Data {
         return Data(title: title, attendees: attendees, lengthInMinutes: Double(lengthInMinutes), theme: theme)
+    }
+
+    mutating func update(from data: Data) {
+        title = data.title
+        attendees = data.attendees
+        lengthInMinutes = Int(data.lengthInMinutes)
+        theme = data.theme
     }
 }
 
