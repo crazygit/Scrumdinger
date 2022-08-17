@@ -12,17 +12,16 @@ struct ThemeView: View {
     var body: some View {
         // Zstack里面的组件越后面出现的组件，越靠近顶层
         ZStack {
-           
             RoundedRectangle(cornerRadius: 4)
                 .fill(theme.mainColor)
             Label(theme.name, systemImage: "paintpalette")
                 .padding(4)
-          
         }
         .foregroundColor(theme.accentColor)
         .fixedSize(horizontal: false, vertical: true)
     }
 }
+
 struct ThemeView_Previews: PreviewProvider {
     static var previews: some View {
         ThemeView(theme: .buttercup)

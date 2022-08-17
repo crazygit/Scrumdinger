@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-
 // 这里使用的所有颜色名称需要在Assets里提前定义好，并使用相同的名字
-enum Theme: String,CaseIterable,Identifiable {
+enum Theme: String, CaseIterable, Identifiable {
     case bubblegum
     case buttercup
     case indigo
@@ -37,12 +36,12 @@ enum Theme: String,CaseIterable,Identifiable {
     var mainColor: Color {
         Color(rawValue)
     }
-    
+
     var name: String {
         rawValue.capitalized
     }
-    
+
     var id: String {
-         name
-     }
+        name
+    }
 }

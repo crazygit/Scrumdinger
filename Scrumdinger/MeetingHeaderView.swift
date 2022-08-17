@@ -23,7 +23,7 @@ struct MeetingHeaderView: View {
         return Double(secondsElapsed) / Double(totalSeconds)
     }
 
-    private var minutesRemaining:Int {
+    private var minutesRemaining: Int {
         secondsRemaining / 60
     }
 

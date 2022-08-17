@@ -1,7 +1,3 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-*/
-
 import Foundation
 
 /// Keeps time for a daily scrum meeting. Keep track of the total meeting time, the time for each speaker, and the name of the current speaker.
@@ -15,7 +11,7 @@ class ScrumTimer: ObservableObject {
         /// Id for Identifiable conformance.
         let id = UUID()
     }
-    
+
     /// The name of the meeting attendee who is speaking.
     @Published var activeSpeaker = ""
     /// The number of seconds since the beginning of the meeting.
@@ -37,40 +33,42 @@ class ScrumTimer: ObservableObject {
     private var secondsPerSpeaker: Int {
         (lengthInMinutes * 60) / speakers.count
     }
+
     private var secondsElapsedForSpeaker: Int = 0
     private var speakerIndex: Int = 0
     private var speakerText: String {
-        return "Speaker \(speakerIndex + 1): " + speakers[speakerIndex].name
+        "Speaker \(speakerIndex + 1): " + speakers[speakerIndex].name
     }
+
     private var startDate: Date?
-    
+
     /**
      Initialize a new timer. Initializing a time with no arguments creates a ScrumTimer with no attendees and zero length.
      Use `startScrum()` to start the timer.
-     
+
      - Parameters:
         - lengthInMinutes: The meeting length.
         -  attendees: A list of attendees for the meeting.
      */
     init(lengthInMinutes: Int = 0, attendees: [DailyScrum.Attendee] = []) {
         self.lengthInMinutes = lengthInMinutes
-        self.speakers = attendees.speakers
+        speakers = attendees.speakers
         secondsRemaining = lengthInSeconds
         activeSpeaker = speakerText
     }
-    
+
     /// Start the timer.
     func startScrum() {
         changeToSpeaker(at: 0)
     }
-    
+
     /// Stop the timer.
     func stopScrum() {
         timer?.invalidate()
         timer = nil
         timerStopped = true
     }
-    
+
     /// Advance the timer to the next speaker.
     func skipSpeaker() {
         changeToSpeaker(at: speakerIndex + 1)
@@ -89,7 +87,7 @@ class ScrumTimer: ObservableObject {
         secondsElapsed = index * secondsPerSpeaker
         secondsRemaining = lengthInSeconds - secondsElapsed
         startDate = Date()
-        timer = Timer.scheduledTimer(withTimeInterval: frequency, repeats: true) { [weak self] timer in
+        timer = Timer.scheduledTimer(withTimeInterval: frequency, repeats: true) { [weak self] _ in
             if let self = self, let startDate = self.startDate {
                 let secondsElapsed = Date().timeIntervalSince1970 - startDate.timeIntervalSince1970
                 self.update(secondsElapsed: Int(secondsElapsed))
@@ -112,17 +110,17 @@ class ScrumTimer: ObservableObject {
             speakerChangedAction?()
         }
     }
-    
+
     /**
      Reset the timer with a new meeting length and new attendees.
-     
+
      - Parameters:
          - lengthInMinutes: The meeting length.
          - attendees: The name of each attendee.
      */
     func reset(lengthInMinutes: Int, attendees: [DailyScrum.Attendee]) {
         self.lengthInMinutes = lengthInMinutes
-        self.speakers = attendees.speakers
+        speakers = attendees.speakers
         secondsRemaining = lengthInSeconds
         activeSpeaker = speakerText
     }
